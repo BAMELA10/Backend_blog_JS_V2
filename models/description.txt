@@ -1,0 +1,5 @@
+Here we will define every Data model for this API
+
+-Users;
+-Posts;
+-Comment;

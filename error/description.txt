@@ -1,0 +1,7 @@
+In this Directory we will define Every types of Error which will handle in the Api.
+
+-NotFound
+-BardRequest
+-Internal Error
+-UnAuthenticated
+-UnAuthorized

@@ -1,0 +1,5 @@
+In this Directory we will define all of method applied for each model.
+
+-Controller for User,
+-Controller for Post,
+-Controller for Comment,

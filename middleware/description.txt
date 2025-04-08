@@ -1,0 +1,5 @@
+In this Directory we will define many methods as Middleware:
+
+-Authentication of User
+-Error handling
+-Not found Middleware

@@ -1,0 +1,8 @@
+here we will define the Utilities method such as:
+
+-CreateTokenUser
+-CheckPermission
+-CreateJWT
+-Attach Cookies To Response
+-Verify if Token is Valid
+-etc...
