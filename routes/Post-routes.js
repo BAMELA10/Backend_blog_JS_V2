@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { AuthMiddleware }= require("../middleware/Auth");
+const { AuthMiddleware, AuhtorizationMiddleware }= require("../middleware/Auth");
 
 const {
     DeletePost,
@@ -8,7 +8,8 @@ const {
     UpdatePost,
     GetSinglePost,
     GetPostForOnlineAuthor,
-    GetAllPost
+    GetAllPost,
+    FilteringPost
 } = require("../controller/PostController");
 
 router
@@ -19,6 +20,9 @@ router
 router
 .route("/me")
 .get(AuthMiddleware, GetPostForOnlineAuthor);
+
+router.route("/search")
+.get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], FilteringPost);
 
 router
 .route("/:id")

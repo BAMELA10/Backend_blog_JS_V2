@@ -19,3 +19,24 @@ Pour la performance et La Scalabilité:
 
 Documentation avec Swagger:
 
+fonction à tester pour validation du tri et du filtre
+
+-GetAllUser
+?sort=att&desc=att   ok
+
+-FilterUser
+?email=,firstname=,role=,lastname=,sort=att&desc=att  ok
+
+-FilterComment,
+?userId=&postId=&id=&sort="desc" ok
+
+-GetAllComments,
+?sort="asc"        ok
+
+-GetAllPost
+?sort=att&desc=att ok
+
+-FilteringPost
+?title=title&author=author ok
+
+

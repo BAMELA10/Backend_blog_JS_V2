@@ -1,29 +1,41 @@
 const User = require('../models/User');
-const {
-    CreateTokenUser,
-    AttachCookieResponse,
-    CheckPermission,
-    IsValidToken
-} = require('../utils');
 
 const { StatusCodes } = require ('http-status-codes');
 const {
     BadRequestError,
     NotFoundError,
     UnAuthenticationError,
-    CustomError,
-    UnauthorizedError
 } = require('../error');
+const {CheckSort} = require("../utils")
 
 // Get All User
+
 const GetAllUser = async (req, res) => {
     //Get all user with the role = user
     const CurrentUser = req.user;
+    const sort = req.query.sort; //list of attributes to sort in ascending
+    const desc = req.query.desc; //list of attributes to sort in descending order
+    const allProps = Object.keys(User.schema.paths);
+    const props = allProps.filter(p => p !== '_id' && p !== '__v');
+
     if (!CurrentUser) {
         throw new UnAuthenticationError("Authentication Invalid");
     }
-    const user = await User.find({Role: "user"});
-    res.status(StatusCodes.OK).json({users: user});
+    const { stringSort, stringDesc } = CheckSort(sort, desc, props);
+
+    if(stringSort || stringDesc)
+    {
+        let separator = stringSort && stringDesc ? " " : "" ;
+        let sortCondition = stringSort + separator + stringDesc
+        const user = await User.find({Role: "user"}).sort(sortCondition);
+        res.status(StatusCodes.OK).json({users: user});
+    }
+    else
+    {
+        const user = await User.find({Role: "user"});
+        res.status(StatusCodes.OK).json({users: user});
+    }
+    
 };
 // Get Single User
 const GetSingleUser = async (req, res) => {
@@ -106,10 +118,57 @@ const UpdatePassword = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.'});
 };
 
+//filtering User with email, role, first name, last name
+const FilterUser = async (req, res) => {
+    const email = req.query.email;
+    const role = req.query.role;
+    const firstname = req.query.firstname;
+    const lastname = req.query.lastname;
+    const sort = req.query.sort; //list of attributes to sort
+    const desc = req.query.desc; //list of attributes to sort in descending order
+    const CurrentUser = req.user;
+
+    const allProps = Object.keys(User.schema.paths);
+    const props = allProps.filter(p => p !== '_id' && p !== '__v');
+
+    if (!CurrentUser) {
+        throw new UnAuthenticationError("Authentication Invalid");
+    }
+    const { stringSort, stringDesc } = CheckSort(sort, desc, props);
+
+    if(!email && !role && !firstname && !lastname){
+        throw new BadRequestError(" Invalid filtering. Check property for filter");
+    };
+
+    if(stringSort || stringDesc)
+    {
+        let separator = stringSort && stringDesc ? " " : "" ;
+        const result = await User.find()
+        .or([
+            {email: new RegExp("^"+ email, "i")},
+            {role: new RegExp("^"+ role, "i")},
+            {'name.first': new RegExp("^"+ firstname, "i")},
+            {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc);
+        res.status(StatusCodes.OK).json({users: result});
+    }
+    else
+    {
+        const result = await User.find()
+        .or([
+            {email: new RegExp("^"+ email, "i")},
+            {role: new RegExp("^"+ role, "i")},
+            {'name.first': new RegExp("^"+ firstname, "i")},
+            {'name.last': new RegExp("^"+ lastname, "i")}])
+        .sort({DateOfJoined: 1});
+        res.status(StatusCodes.OK).json({users: result});
+    }
+}
+
 module.exports = {
     GetAllUser,
     GetSingleUser,
     GetCurrentUser,
     UpdateUser,
     UpdatePassword,
+    FilterUser
 }

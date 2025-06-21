@@ -3,26 +3,35 @@ const StatusCodes = require("http-status-codes");
 const {
     BadRequestError,
     NotFoundError,
-    UnAuthenticationError,
-    CustomError,
-    UnauthorizedError
 } = require('../error');
 
 const {
-    CreateTokenUser,
-    AttachCookieResponse,
-    CheckPermission,
-    IsValidToken,
-    CreateJWT
+    CheckSort
 } = require('../utils');
 
 
 //Get All Posts
 
 const GetAllPost = async (req, res) => {
-    const posts = await Post.find();
+    const sort = req.query.sort; //list of attributes to sort
+    const desc = req.query.desc; //list of attributes to sort in descending order
+    const props =['title','DateOfCreation', 'LastUpdate'];
+    
+    const { stringSort, stringDesc } = CheckSort(sort, desc, props);
 
-    res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    if(stringSort || stringDesc)
+    {
+        let separator = stringSort && stringDesc ? " " : "" ;
+        const posts = await Post.find().sort( stringSort + separator + stringDesc);
+        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    }
+    else
+    {
+        const posts = await Post.find();
+        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    }
+
+   
 
 };
 //Get All Post's online User
@@ -50,7 +59,6 @@ const NewPost = async (req, res) => {
     };
 
     const post = await Post.create({title, content, Image, User});
-    console.log("hello 2 ");
     res.status(StatusCodes.CREATED).json({post: post });
 
 }
@@ -91,10 +99,42 @@ const DeletePost = async (req, res) => {
 }
 //filter Post for the end of main feature of API
 
+//sorting Post with the date of creation, Last Update, Title
+//Filtering Post with the title, author
+const FilteringPost = async (req, res) => {
+    const title = req.query.title? req.query.title : "";
+    const author = req.query.author? req.query.author : "";
+    console.log(title, author);
+
+    if(!title && !author){
+        throw new BadRequestError(" Invalid filtering. Check property for filter");
+    };
+
+    let result = await Post.find()
+    .or(
+        { title: new RegExp("^" + title, "i")},
+    )
+    .populate({
+        path: "User",
+        match:{ 
+            $or: [
+                { "name.first": new RegExp("^" + author, "i") },
+                { "name.last": new RegExp("^" + author, "i") }
+            ]
+        },
+    })
+    .sort({DateOfCreation: 1});
+
+    const posts = result.filter(post => post.User !== null);
+    res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+}
+
 module.exports =  {
     DeletePost, 
     NewPost, 
     UpdatePost, 
     GetSinglePost, 
     GetPostForOnlineAuthor, 
-    GetAllPost}
+    GetAllPost,
+    FilteringPost,
+}

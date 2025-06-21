@@ -12,12 +12,16 @@ const {
     GetCurrentUser,
     UpdateUser,
     UpdatePassword,
+    FilterUser
 } = require('../controller/UserController');
 
 router
 .route('/me')
 .get(AuthMiddleware, GetCurrentUser)
 .put(AuthMiddleware, UpdatePassword)
+
+router.route("/search")
+.get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], FilterUser);
 
 router.route('/').get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], GetAllUser);
 router

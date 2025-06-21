@@ -1,15 +1,30 @@
+const { query } = require("express");
 const {
     NotFoundError,
     BadRequestError,
 } = require("../error");
 
 const Comment = require("../models/Comment");
-const Post = require("../models/Post");
 const StatusCodes = require("http-status-codes");
 
 //Get All Comments
 const GetAllComments = async (req, res) => {
-    const comments = await Comment.find().populate({path: ["User", "Post"]} );
+    const sort = req.query.sort;
+    if(sort && new RegExp("desc", "i").test(sort))
+    {
+        const comments = await Comment.find()
+        .populate({path: ["User", "Post"]})
+        .sort({DateOfCreation: -1});
+        res.status(StatusCodes.OK).json({ count: comments.length, comments });
+    }
+    else
+    {
+        const comments = await Comment.find()
+        .populate({path: ["User", "Post"]})
+        .sort({DateOfCreation: 1});
+        res.status(StatusCodes.OK).json({ count: comments.length, comments });
+    }
+    
     res.status(StatusCodes.OK).json({ count: comments.length, comments });
 };
 
@@ -18,6 +33,8 @@ FilterComment = async (req, res) => {
     const UserId = req.query.UserId;
     const PostId = req.query.PostId;
     const Id = req.query.Id;
+    const sort = req.query.sort
+
 
     if(!UserId && !PostId && !Id)
     {
@@ -68,7 +85,25 @@ FilterComment = async (req, res) => {
             result.push(items);
         };
     });
-    res.status(StatusCodes.OK).json({ count: result.length, Comment:result });
+
+    //Sorting comment with DateCreation
+    if(sort && new RegExp("desc", "i").test(sort))
+    {
+        result.sort((a, b) => {
+            return b.DateOfCreation.getTime() - a.DateOfCreation.getTime();
+        });
+        res.status(StatusCodes.OK).json({ count: result.length, Comment:result });
+    }
+    else
+    {
+        result.sort((a, b) => {
+            return a.DateOfCreation.getTime() - b.DateOfCreation.getTime();
+        });
+        res.status(StatusCodes.OK).json({ count: result.length, Comment:result });
+    }
+    
+
+    
 }
 
 
@@ -102,7 +137,6 @@ const CreateComment = async (req, res) => {
 
 const DeleteComment = async (req, res) => {
     const CommentId = req.params.id;
-
     const comment = await Comment.findByIdAndDelete(CommentId);
     if (!comment) {
         throw new NotFoundError("Comment not found");
@@ -118,6 +152,5 @@ module.exports = {
     CreateComment,
     GetSingleComment,
     FilterComment,
-    GetAllComments
-
+    GetAllComments,
 }
