@@ -9,12 +9,14 @@ const {
 const {CheckSort} = require("../utils")
 
 // Get All User
-
+// pagination with number of page and limit
 const GetAllUser = async (req, res) => {
     //Get all user with the role = user
     const CurrentUser = req.user;
     const sort = req.query.sort; //list of attributes to sort in ascending
     const desc = req.query.desc; //list of attributes to sort in descending order
+    const page = req.query.page;
+    const limit = req.query.limit || 10;
     const allProps = Object.keys(User.schema.paths);
     const props = allProps.filter(p => p !== '_id' && p !== '__v');
 
@@ -27,16 +29,39 @@ const GetAllUser = async (req, res) => {
     {
         let separator = stringSort && stringDesc ? " " : "" ;
         let sortCondition = stringSort + separator + stringDesc
-        const user = await User.find({Role: "user"}).sort(sortCondition);
-        res.status(StatusCodes.OK).json({users: user});
+        if(page){
+            const skip = page -1;
+            const user = await User.find({Role: "user"})
+            .skip(skip)
+            .limit(limit)
+            .sort(sortCondition)
+            res.status(StatusCodes.OK).json({users: user});
+        }
+        else
+        {
+            const user = await User.find({Role: "user"}).sort(sortCondition);
+            res.status(StatusCodes.OK).json({users: user});
+        }
+        
     }
     else
     {
-        const user = await User.find({Role: "user"});
-        res.status(StatusCodes.OK).json({users: user});
+        if(page)
+        {
+            let skip = page - 1; 
+            const user = await User.find({Role: "user"}).skip(skip).limit(limit);
+            res.status(StatusCodes.OK).json({users: user});
+        }
+        else
+        {
+            const user = await User.find({Role: "user"});
+            res.status(StatusCodes.OK).json({users: user});
+        }
+        
     }
     
 };
+
 // Get Single User
 const GetSingleUser = async (req, res) => {
     
@@ -58,6 +83,7 @@ const GetSingleUser = async (req, res) => {
     // respose if user is found
     res.status(StatusCodes.OK).json({user: user});
 };
+
 // Get Current User
 const GetCurrentUser = async (req, res) => {
     //Get current user is online
@@ -67,6 +93,7 @@ const GetCurrentUser = async (req, res) => {
     }
     res.status(StatusCodes.OK).json({users: CurrentUser});
 };
+
 // Update User
 const UpdateUser = async (req, res) => {
     //get the data entry of user update
@@ -119,6 +146,7 @@ const UpdatePassword = async (req, res) => {
 };
 
 //filtering User with email, role, first name, last name
+// pagination with number of page and limit
 const FilterUser = async (req, res) => {
     const email = req.query.email;
     const role = req.query.role;
@@ -126,6 +154,9 @@ const FilterUser = async (req, res) => {
     const lastname = req.query.lastname;
     const sort = req.query.sort; //list of attributes to sort
     const desc = req.query.desc; //list of attributes to sort in descending order
+    const page = req.query.page;
+    const limit = req.query.limit || 10;
+
     const CurrentUser = req.user;
 
     const allProps = Object.keys(User.schema.paths);
@@ -143,25 +174,77 @@ const FilterUser = async (req, res) => {
     if(stringSort || stringDesc)
     {
         let separator = stringSort && stringDesc ? " " : "" ;
-        const result = await User.find()
-        .or([
-            {email: new RegExp("^"+ email, "i")},
-            {role: new RegExp("^"+ role, "i")},
-            {'name.first': new RegExp("^"+ firstname, "i")},
-            {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc);
-        res.status(StatusCodes.OK).json({users: result});
+        if(page)
+        {
+            const skip = page - 1;
+            const result = await User.find()
+            .or([
+                {email: new RegExp("^"+ email, "i")},
+                {role: new RegExp("^"+ role, "i")},
+                {'name.first': new RegExp("^"+ firstname, "i")},
+                {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc)
+            .skip(skip)
+            .limit(limit);
+            res.status(StatusCodes.OK).json({users: result});
+        }
+        else
+        {
+            if(page)
+            {
+                const skip = page -1;
+                const result = await User.find()
+                .or([
+                    {email: new RegExp("^"+ email, "i")},
+                    {role: new RegExp("^"+ role, "i")},
+                    {'name.first': new RegExp("^"+ firstname, "i")},
+                    {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc)
+                .skip(skip)
+                .limit(limit);
+                res.status(StatusCodes.OK).json({users: result});
+            }
+            else
+            {
+                const result = await User.find()
+                .or([
+                    {email: new RegExp("^"+ email, "i")},
+                    {role: new RegExp("^"+ role, "i")},
+                    {'name.first': new RegExp("^"+ firstname, "i")},
+                    {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc);
+                res.status(StatusCodes.OK).json({users: result});
+            }
+        }
     }
     else
     {
-        const result = await User.find()
-        .or([
-            {email: new RegExp("^"+ email, "i")},
-            {role: new RegExp("^"+ role, "i")},
-            {'name.first': new RegExp("^"+ firstname, "i")},
-            {'name.last': new RegExp("^"+ lastname, "i")}])
-        .sort({DateOfJoined: 1});
-        res.status(StatusCodes.OK).json({users: result});
+        if(page)
+        {
+            const skip = page -1;
+            const result = await User.find()
+            .or([
+                {email: new RegExp("^"+ email, "i")},
+                {role: new RegExp("^"+ role, "i")},
+                {'name.first': new RegExp("^"+ firstname, "i")},
+                {'name.last': new RegExp("^"+ lastname, "i")}])
+            .skip(skip)
+            .limit(limit)
+            .sort({DateOfJoined: 1});
+            res.status(StatusCodes.OK).json({users: result});
+        }
+        else
+        {
+            const result = await User.find()
+            .or([
+                {email: new RegExp("^"+ email, "i")},
+                {role: new RegExp("^"+ role, "i")},
+                {'name.first': new RegExp("^"+ firstname, "i")},
+                {'name.last': new RegExp("^"+ lastname, "i")}])
+            .sort({DateOfJoined: 1});
+            res.status(StatusCodes.OK).json({users: result});
+        }
+        
     }
+
+
 }
 
 module.exports = {
