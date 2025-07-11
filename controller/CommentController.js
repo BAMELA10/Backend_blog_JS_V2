@@ -17,7 +17,7 @@ const GetAllComments = async (req, res) => {
     {
         if(page)
         {
-            const skip = page -1;
+            const skip = (page -1) * limit;
             const comments = await Comment.find()
             .skip(skip)
             .limit(limit)
@@ -38,7 +38,7 @@ const GetAllComments = async (req, res) => {
     {
         if(page)
         {
-            const skip = page -1;
+            const skip = (page -1) * limit;
             const comments = await Comment.find()
             .skip(skip)
             .limit(limit)
@@ -80,7 +80,7 @@ FilterComment = async (req, res) => {
 
     if(page)
     {
-        const skip = page -1;
+        const skip = (page -1) * limit;
         comment = await Comment.find({_id:Id }).populate({path: ["User", "Post"]})
         .skip(skip)
         .limit(limit);

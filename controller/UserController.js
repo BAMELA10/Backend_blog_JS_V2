@@ -30,7 +30,7 @@ const GetAllUser = async (req, res) => {
         let separator = stringSort && stringDesc ? " " : "" ;
         let sortCondition = stringSort + separator + stringDesc
         if(page){
-            const skip = page -1;
+            const skip = (page -1) * limit;
             const user = await User.find({Role: "user"})
             .skip(skip)
             .limit(limit)
@@ -177,7 +177,7 @@ const FilterUser = async (req, res) => {
         
         if(page)
         {
-            const skip = page -1;
+            const skip = (page -1) * limit;
             const result = await User.find()
             .or([
                 {email: new RegExp("^"+ email, "i")},
@@ -204,7 +204,7 @@ const FilterUser = async (req, res) => {
     {
         if(page)
         {
-            const skip = page -1;
+            const skip = (page -1) * limit;
             const result = await User.find()
             .or([
                 {email: new RegExp("^"+ email, "i")},

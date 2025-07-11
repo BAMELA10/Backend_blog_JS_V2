@@ -23,7 +23,7 @@ const GetAllPost = async (req, res) => {
 
     if (page)
     {
-        const skip = page - 1;
+        const skip = (page - 1) * limit;
         if(stringSort || stringDesc)
         {
             let separator = stringSort && stringDesc ? " " : "" ;
@@ -67,7 +67,7 @@ const GetPostForOnlineAuthor = async (req, res) => {
 
     if(page)
     {
-        const skip = page - 1;
+        const skip = (page - 1) * limit;
         const posts = await Post.find({User: User.userId}).skip(skip).limit(limit);
         res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
     }
@@ -154,7 +154,7 @@ const FilteringPost = async (req, res) => {
 
     if(page)
     {
-        const skip = page - 1;
+        const skip = (page - 1) * limit;
         result = await Post.find()
         .or(
             { title: new RegExp("^" + title, "i")},
