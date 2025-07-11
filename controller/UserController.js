@@ -35,12 +35,12 @@ const GetAllUser = async (req, res) => {
             .skip(skip)
             .limit(limit)
             .sort(sortCondition)
-            res.status(StatusCodes.OK).json({users: user});
+            res.status(StatusCodes.OK).json({count:user.length, users: user});
         }
         else
         {
             const user = await User.find({Role: "user"}).sort(sortCondition);
-            res.status(StatusCodes.OK).json({users: user});
+            res.status(StatusCodes.OK).json({count:user.length, users: user});
         }
         
     }
@@ -50,12 +50,12 @@ const GetAllUser = async (req, res) => {
         {
             let skip = page - 1; 
             const user = await User.find({Role: "user"}).skip(skip).limit(limit);
-            res.status(StatusCodes.OK).json({users: user});
+            res.status(StatusCodes.OK).json({count:user.length, users: user});
         }
         else
         {
             const user = await User.find({Role: "user"});
-            res.status(StatusCodes.OK).json({users: user});
+            res.status(StatusCodes.OK).json({count:user.length, users: user});
         }
         
     }
@@ -174,45 +174,31 @@ const FilterUser = async (req, res) => {
     if(stringSort || stringDesc)
     {
         let separator = stringSort && stringDesc ? " " : "" ;
+        
         if(page)
         {
-            const skip = page - 1;
+            const skip = page -1;
             const result = await User.find()
             .or([
                 {email: new RegExp("^"+ email, "i")},
-                {role: new RegExp("^"+ role, "i")},
+                {Role: new RegExp("^"+ role, "i")},
                 {'name.first': new RegExp("^"+ firstname, "i")},
                 {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc)
             .skip(skip)
             .limit(limit);
-            res.status(StatusCodes.OK).json({users: result});
+            res.status(StatusCodes.OK).json({count: result.length, users: result});
         }
         else
         {
-            if(page)
-            {
-                const skip = page -1;
-                const result = await User.find()
-                .or([
-                    {email: new RegExp("^"+ email, "i")},
-                    {role: new RegExp("^"+ role, "i")},
-                    {'name.first': new RegExp("^"+ firstname, "i")},
-                    {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc)
-                .skip(skip)
-                .limit(limit);
-                res.status(StatusCodes.OK).json({users: result});
-            }
-            else
-            {
-                const result = await User.find()
-                .or([
-                    {email: new RegExp("^"+ email, "i")},
-                    {role: new RegExp("^"+ role, "i")},
-                    {'name.first': new RegExp("^"+ firstname, "i")},
-                    {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc);
-                res.status(StatusCodes.OK).json({users: result});
-            }
+            const result = await User.find()
+            .or([
+                {email: new RegExp("^"+ email, "i")},
+                {Role: new RegExp("^"+ role, "i")},
+                {'name.first': new RegExp("^"+ firstname, "i")},
+                {'name.last': new RegExp("^"+ lastname, "i")}]).sort( stringSort + separator + stringDesc);
+            res.status(StatusCodes.OK).json({count: result.length, users: result});
         }
+        
     }
     else
     {
@@ -222,24 +208,24 @@ const FilterUser = async (req, res) => {
             const result = await User.find()
             .or([
                 {email: new RegExp("^"+ email, "i")},
-                {role: new RegExp("^"+ role, "i")},
+                {Role: new RegExp("^"+ role, "i")},
                 {'name.first': new RegExp("^"+ firstname, "i")},
                 {'name.last': new RegExp("^"+ lastname, "i")}])
             .skip(skip)
             .limit(limit)
             .sort({DateOfJoined: 1});
-            res.status(StatusCodes.OK).json({users: result});
+            res.status(StatusCodes.OK).json({count: result.length, users: result});
         }
         else
         {
             const result = await User.find()
             .or([
                 {email: new RegExp("^"+ email, "i")},
-                {role: new RegExp("^"+ role, "i")},
+                {Role: new RegExp("^"+ role, "i")},
                 {'name.first': new RegExp("^"+ firstname, "i")},
                 {'name.last': new RegExp("^"+ lastname, "i")}])
             .sort({DateOfJoined: 1});
-            res.status(StatusCodes.OK).json({users: result});
+            res.status(StatusCodes.OK).json({count: result.length, users: result});
         }
         
     }

@@ -74,9 +74,9 @@ FilterComment = async (req, res) => {
         throw new BadRequestError("Check your query");
     }
 
-    const comment = "";
-    const comment_first = "";
-    const comment_last = "";
+    let comment = "";
+    let comment_first = "";
+    let comment_last = "";
 
     if(page)
     {

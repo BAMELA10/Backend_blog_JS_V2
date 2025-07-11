@@ -150,7 +150,7 @@ const FilteringPost = async (req, res) => {
         throw new BadRequestError(" Invalid filtering. Check property for filter");
     };
 
-    const result = "";
+    let result = "";
 
     if(page)
     {
