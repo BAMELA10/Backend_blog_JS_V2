@@ -11,35 +11,72 @@ const {
 
 
 //Get All Posts
-
+// pagination with number of page and limit
 const GetAllPost = async (req, res) => {
     const sort = req.query.sort; //list of attributes to sort
     const desc = req.query.desc; //list of attributes to sort in descending order
+    const page = req.query.page;
+    const limit = req.query.limit || 10;
     const props =['title','DateOfCreation', 'LastUpdate'];
     
     const { stringSort, stringDesc } = CheckSort(sort, desc, props);
 
-    if(stringSort || stringDesc)
+    if (page)
     {
-        let separator = stringSort && stringDesc ? " " : "" ;
-        const posts = await Post.find().sort( stringSort + separator + stringDesc);
-        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        const skip = (page - 1) * limit;
+        if(stringSort || stringDesc)
+        {
+            let separator = stringSort && stringDesc ? " " : "" ;
+            const posts = await Post.find().skip(skip).limit(limit).sort( stringSort + separator + stringDesc);
+            res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        }
+        else
+        {
+            const posts = await Post.find().skip(skip).limit(limit);
+            res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        }
+
     }
     else
     {
-        const posts = await Post.find();
-        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        if(stringSort || stringDesc)
+        {
+            let separator = stringSort && stringDesc ? " " : "" ;
+            const posts = await Post.find().sort( stringSort + separator + stringDesc);
+            res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        }
+        else
+        {
+            const posts = await Post.find();
+            res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+        }
     }
+
+    
 
    
 
 };
+
 //Get All Post's online User
+// pagination with number of page and limit
 const GetPostForOnlineAuthor = async (req, res) => {
     const User = req.user;
-    const posts = await Post.find({User: User.userId});
-    res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    const page = req.query.page;
+    const limit = req.query.limit || 10;
 
+    if(page)
+    {
+        const skip = (page - 1) * limit;
+        const posts = await Post.find({User: User.userId}).skip(skip).limit(limit);
+        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    }
+    else
+    {
+        const posts = await Post.find({User: User.userId});
+        res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    }
+    
 };
 //Get Single post
 const GetSinglePost = async (req, res) => {
@@ -97,36 +134,65 @@ const DeletePost = async (req, res) => {
 
     res.status(StatusCodes.OK).json({post: "Post Deleted Successfully" });
 }
-//filter Post for the end of main feature of API
 
+
+//filter Post for the end of main feature of API
 //sorting Post with the date of creation, Last Update, Title
 //Filtering Post with the title, author
+// pagination with number of page and limit
 const FilteringPost = async (req, res) => {
     const title = req.query.title? req.query.title : "";
     const author = req.query.author? req.query.author : "";
-    console.log(title, author);
+    const page = req.query.page;
+    const limit = req.query.limit || 10;
 
     if(!title && !author){
         throw new BadRequestError(" Invalid filtering. Check property for filter");
     };
 
-    let result = await Post.find()
-    .or(
-        { title: new RegExp("^" + title, "i")},
-    )
-    .populate({
-        path: "User",
-        match:{ 
-            $or: [
-                { "name.first": new RegExp("^" + author, "i") },
-                { "name.last": new RegExp("^" + author, "i") }
-            ]
-        },
-    })
-    .sort({DateOfCreation: 1});
+    let result = "";
+
+    if(page)
+    {
+        const skip = (page - 1) * limit;
+        result = await Post.find()
+        .or(
+            { title: new RegExp("^" + title, "i")},
+        )
+        .populate({
+            path: "User",
+            match:{ 
+                $or: [
+                    { "name.first": new RegExp("^" + author, "i") },
+                    { "name.last": new RegExp("^" + author, "i") }
+                ]
+            },
+        })
+        .skip(skip)
+        .limit(limit)
+        .sort({DateOfCreation: 1});
+    }
+    else 
+    {
+        result = await Post.find()
+        .or(
+            { title: new RegExp("^" + title, "i")},
+        )
+        .populate({
+            path: "User",
+            match:{ 
+                $or: [
+                    { "name.first": new RegExp("^" + author, "i") },
+                    { "name.last": new RegExp("^" + author, "i") }
+                ]
+            },
+        })
+        .sort({DateOfCreation: 1});
+    }
 
     const posts = result.filter(post => post.User !== null);
     res.status(StatusCodes.OK).json({ count: posts.length, posts: posts });
+    
 }
 
 module.exports =  {

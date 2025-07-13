@@ -22,21 +22,26 @@ Documentation avec Swagger:
 fonction à tester pour validation du tri et du filtre
 
 -GetAllUser
-?sort=att&desc=att   ok
+?sort=att&desc=att  ok
+?page=num&limit=num ok 
 
 -FilterUser
 ?email=,firstname=,role=,lastname=,sort=att&desc=att  ok
+?page=num&limit=num ok
 
 -FilterComment,
 ?userId=&postId=&id=&sort="desc" ok
+?page=num&limit=num ok
 
 -GetAllComments,
 ?sort="asc"        ok
+?page=num&limit=num ok
 
 -GetAllPost
 ?sort=att&desc=att ok
+?page=num&limit=num ok
 
 -FilteringPost
 ?title=title&author=author ok
-
+?page=num&limit=num ok
 
