@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { AuthMiddleware, AuhtorizationMiddleware }= require("../middleware/Auth");
+const Caching = require ('../middleware/Caching');
 
 const {
     DeletePost,
@@ -14,19 +15,19 @@ const {
 
 router
 .route("/")
-.get(AuthMiddleware, GetAllPost)
+.get([AuthMiddleware, Caching], GetAllPost)
 .post(AuthMiddleware, NewPost)
 
 router
 .route("/me")
-.get(AuthMiddleware, GetPostForOnlineAuthor);
+.get([AuthMiddleware, Caching], GetPostForOnlineAuthor);
 
 router.route("/search")
-.get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], FilteringPost);
+.get([AuthMiddleware, AuhtorizationMiddleware(["admin"]), Caching], FilteringPost);
 
 router
 .route("/:id")
-.get(AuthMiddleware, GetSinglePost)
+.get([AuthMiddleware, Caching], GetSinglePost)
 .put(AuthMiddleware, UpdatePost)
 .delete(AuthMiddleware, DeletePost);
 
