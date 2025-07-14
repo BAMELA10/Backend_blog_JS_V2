@@ -14,19 +14,20 @@ const {
     UpdatePassword,
     FilterUser
 } = require('../controller/UserController');
+const Caching = require("../middleware/Caching");
 
 router
 .route('/me')
-.get(AuthMiddleware, GetCurrentUser)
+.get([AuthMiddleware], GetCurrentUser)
 .put(AuthMiddleware, UpdatePassword)
 
 router.route("/search")
-.get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], FilterUser);
+.get([AuthMiddleware, AuhtorizationMiddleware(["admin"]), Caching], FilterUser);
 
 router.route('/').get([AuthMiddleware, AuhtorizationMiddleware(["admin"])], GetAllUser);
 router
 .route('/:id')
-.get([AuthMiddleware, AuhtorizationMiddleware(["admin"])],  GetSingleUser)
+.get([AuthMiddleware, AuhtorizationMiddleware(["admin"]), Caching],  GetSingleUser)
 .put([AuthMiddleware, AuhtorizationMiddleware(["admin"])],  UpdateUser)
 
 module.exports = router;

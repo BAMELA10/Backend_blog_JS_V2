@@ -11,16 +11,16 @@ const {
 
 const {AuthMiddleware} = require("../middleware/Auth");
 
-router.route("/").get(AuthMiddleware, GetAllComments);
+router.route("/").get([AuthMiddleware, Caching], GetAllComments);
 
 router.route("/search")
-.get(AuthMiddleware, FilterComment);
+.get([AuthMiddleware, Caching], FilterComment);
 
 router.route("/:postId")
 .post(AuthMiddleware, CreateComment)
 
 router.route("/:id")
-.get(AuthMiddleware, GetSingleComment)
+.get([AuthMiddleware, Caching], GetSingleComment)
 .delete(AuthMiddleware, DeleteComment);
 
 

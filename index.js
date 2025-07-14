@@ -2,8 +2,10 @@ require('dotenv').config({ path: ['.env.development', '.env.production'] });
 require('express-async-errors');
 const {limiter} = require('./utils');
 const express = require('express');
+
 const app = express();
 const cookieParser = require('cookie-parser');
+//
 
 const connectDb = require('./db/ConnectDb');
 
@@ -17,6 +19,7 @@ const ErrorHandlerMiddleware = require('./middleware/Error-handler');
 const NotFound = require('./middleware/not-found');
 
 
+
 app.use(express.json());
 app.use(limiter);
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -28,6 +31,7 @@ app.use('/BlogApi/v2/comment', CommentRouter);
 
 app.use(NotFound);
 app.use(ErrorHandlerMiddleware);
+//app.use(Caching)
 
 
 
