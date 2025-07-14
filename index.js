@@ -17,21 +17,25 @@ const UserRouter = require('./routes/User-routes');
 
 const ErrorHandlerMiddleware = require('./middleware/Error-handler');
 const NotFound = require('./middleware/not-found');
+const logger = require('./utils/looging');
 
 
-
+app.use(logger);
 app.use(express.json());
 app.use(limiter);
 app.use(cookieParser(process.env.COOKIE_SECRET));
+
 
 app.use('/BlogApi/v2/auth', AuthRouter);
 app.use('/BlogApi/v2/post', PostRouter);
 app.use('/BlogApi/v2/user', UserRouter);
 app.use('/BlogApi/v2/comment', CommentRouter);
 
+
 app.use(NotFound);
 app.use(ErrorHandlerMiddleware);
-//app.use(Caching)
+
+
 
 
 

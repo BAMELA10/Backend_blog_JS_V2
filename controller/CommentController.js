@@ -105,7 +105,6 @@ FilterComment = async (req, res) => {
         if (arr.length !== 0) {
             for (let elt of arr) {
                 let eltId = elt._id;
-                console.log(eltId)
                 eltId = eltId.toString();
                 if(eltId === ObjectId) {
                     return true;
@@ -118,21 +117,18 @@ FilterComment = async (req, res) => {
     let result = [];
     comment.forEach(items => {
         let dec = CheckObject(items, result);
-        console.log(dec);
         if(!dec) {
             result.push(items);
         };
     });
     comment_first.forEach(items => {
         let dec = CheckObject(items, result)
-        console.log(dec);
         if(!dec) {
             result.push(items);
         };
     });
     comment_last.forEach(items => {
         let dec = CheckObject(items, result)
-        console.log(dec);
         if(!dec) {
             result.push(items);
         };
