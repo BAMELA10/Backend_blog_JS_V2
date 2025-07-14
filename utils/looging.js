@@ -11,7 +11,7 @@ const logger = (req, res, next) => {
         }
         else 
         {
-            console.log(`[${start.toString()}] ERROR ${res.statusCode} ${req.method} ${req.originalUrl} ${duration.toString()}ms`);
+            console.log(`[${new Date(start)}] ERROR ${res.statusCode} ${req.method} ${req.originalUrl} ${duration.toString()}ms`);
         }
         
         return End.apply(res, args)
