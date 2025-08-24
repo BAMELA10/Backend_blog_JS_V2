@@ -5,7 +5,7 @@ const logger = (req, res, next) => {
     res.end = (...args) => {
         const duration = Date.now() - start;
 
-        if(res.statusCode == 200)
+        if(res.statusCode == 200 || res.statusCode == 201)
         {
             console.log(`[${new Date(start)}] INFO ${res.statusCode} ${req.method} ${req.originalUrl} ${duration.toString()}ms`);
         }
