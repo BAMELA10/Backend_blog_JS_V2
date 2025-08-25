@@ -5,9 +5,11 @@ const ErrorHandlerMiddleware = (err, req, res, next) => {
         StatusCode : err.status || StatusCodes.INTERNAL_SERVER_ERROR,
         message: err.message || "Something went wrong try again later",
     };
+    //console.log(err.code + '  '+ err.error)
     if (err.name === "ValidationError"){
-        console.log("Attention")
-        GenericError.message = err.message;
+        GenericError.message = Object.values(err.errors)
+        .map((items) => items.message)
+        .join(',');
         GenericError.StatusCode = 400;
 
     };
