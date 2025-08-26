@@ -26,18 +26,14 @@ app.use(limiter);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 
+
 app.use('/BlogApi/v2/auth', AuthRouter);
 app.use('/BlogApi/v2/post', PostRouter);
 app.use('/BlogApi/v2/user', UserRouter);
 app.use('/BlogApi/v2/comment', CommentRouter);
 
-
 app.use(NotFound);
 app.use(ErrorHandlerMiddleware);
-
-
-
-
 
 const port =  process.env.PORT || 3000 ;
 
