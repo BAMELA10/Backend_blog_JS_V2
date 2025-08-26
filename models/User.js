@@ -20,7 +20,12 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: () => {
+            const RegE = /[a-z](@)/gs;
+            console.log(RegE.test(this))
+            return RegE.test(this);
+        }
     },
     password: {
         type: String,
