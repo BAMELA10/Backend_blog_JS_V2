@@ -17,9 +17,13 @@ const PostSchema = new Schema({
         type: String,
         required: false
     },
-    User: {
+    Author: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "User"
+    },
+    Blog: {
+        type: Schema.Types.ObjectId,
+        ref: "Blog",
     },
     DateOfCreation: {
         type: Date,

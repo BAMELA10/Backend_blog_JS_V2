@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const { AuthMiddleware, AuhtorizationMiddleware }= require("../middleware/Auth");
 const Caching = require ('../middleware/Caching');
 
@@ -12,6 +12,8 @@ const {
     GetAllPost,
     FilteringPost
 } = require("../controller/PostController");
+
+const commentRouter = require("./Comment-routes");
 
 router
 .route("/")
@@ -26,11 +28,11 @@ router.route("/search")
 .get([AuthMiddleware, AuhtorizationMiddleware(["admin"]), Caching], FilteringPost);
 
 router
-.route("/:id")
+.route("/:postid")
 .get([AuthMiddleware, Caching], GetSinglePost)
 .put(AuthMiddleware, UpdatePost)
 .delete(AuthMiddleware, DeletePost);
 
-
+router.use('/:postid/comment', commentRouter)
 
 module.exports = router;

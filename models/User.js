@@ -16,17 +16,15 @@ const UserSchema = new Schema({
             length: 20
         }
     },
-    
     email: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: (value) => {
-            const RegE = /^\w+@\w+\.[a-zA-Z]{2,}$/  //^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
-            console.log(RegE.test(value))
-            return RegE.test(value);
-        }
-    },
+    type: String,
+    required: true,
+    unique: true,
+    validate: (value) => {
+        const RegE = /^\w+@\w+\.[a-zA-Z]{2,}$/  //^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
+        console.log(RegE.test(value))
+        return RegE.test(value);
+    }},
     password: {
         type: String,
         required: true,

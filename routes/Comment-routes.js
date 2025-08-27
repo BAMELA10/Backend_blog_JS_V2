@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const Caching = require("../middleware/Caching");
 
 const {
@@ -9,6 +9,7 @@ const {
     FilterComment,
     GetAllComments
 } = require("../controller/CommentController");
+
 
 const {AuthMiddleware} = require("../middleware/Auth");
 
