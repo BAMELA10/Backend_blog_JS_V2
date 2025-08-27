@@ -2,10 +2,16 @@ require('dotenv').config({ path: ['.env.development', '.env.production'] });
 require('express-async-errors');
 const {limiter} = require('./utils');
 const express = require('express');
+const fs = require('fs');
+const https = require('https')
+
 
 const app = express();
 const cookieParser = require('cookie-parser');
-//
+const SecurityHttpOption = {
+    key: fs.readFileSync(__dirname + "/ssl/meadowlark.pem"),
+    cert: fs.readFileSync(__dirname + "/ssl/meadowlark.crt")
+}
 
 const connectDb = require('./db/ConnectDb');
 
@@ -36,7 +42,7 @@ app.use(ErrorHandlerMiddleware);
 
 const port =  process.env.PORT || 3000 ;
 
-app.listen(port, async () => {
+https.createServer(SecurityHttpOption, app).listen(port, async () => {
     console.log(`Server is running on port ${port} in mode ${process.env.NODE_ENV}`);
     await connectDb()
     .then(() => {

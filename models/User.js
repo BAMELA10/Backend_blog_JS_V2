@@ -16,7 +16,6 @@ const UserSchema = new Schema({
             length: 20
         }
     },
-    
     email: {
     type: String,
     required: true,
@@ -25,8 +24,7 @@ const UserSchema = new Schema({
         const RegE = /^\w+@\w+\.[a-zA-Z]{2,}$/  //^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
         console.log(RegE.test(value))
         return RegE.test(value);
-    }
-    },
+    }},
     password: {
         type: String,
         required: true,
@@ -60,7 +58,11 @@ UserSchema.pre('save', async function(next) {
     let user = this;
     //put the date of creation before the save
     user.DateOfJoined = Date.now();
-
+    //const Exp = new RegExp("[a-z-0-9]@[a-z-0-9].[a-z]","s");
+    /* if (!new RegExp().test(user.email)){
+        throw new mongoose.Error.ValidationError()
+    } */
+    
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(user.password, salt);
     user.password = hash
