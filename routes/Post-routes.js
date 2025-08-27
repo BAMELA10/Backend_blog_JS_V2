@@ -13,7 +13,7 @@ const {
     FilteringPost
 } = require("../controller/PostController");
 
-const commentController = require("../controller/CommentController");
+const commentRouter = require("./Comment-routes");
 
 router
 .route("/")
@@ -28,11 +28,11 @@ router.route("/search")
 .get([AuthMiddleware, AuhtorizationMiddleware(["admin"]), Caching], FilteringPost);
 
 router
-.route("/:id")
+.route("/:postid")
 .get([AuthMiddleware, Caching], GetSinglePost)
 .put(AuthMiddleware, UpdatePost)
 .delete(AuthMiddleware, DeletePost);
 
-router.use('/:id/comment', commentController)
+router.use('/:postid/comment', commentRouter)
 
 module.exports = router;

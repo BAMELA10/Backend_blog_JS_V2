@@ -1,15 +1,14 @@
 const express = require('express');
 const Router = express.Router();
 const blogController = require("../controller/BlogController");
-const PostController = require("../controller/PostController");
+const PostRouter = require("./Post-routes");
 const { AuthMiddleware } = require('../middleware/Auth');
-const { Route } = require('express');
-
+const Caching = require ('../middleware/Caching');
 //Definition of Routes
 
 Router
 .route('/')
-.get([AuthMiddleware, Caching], blogController.getAllBlogsByUser)
+.get([AuthMiddleware, Caching], blogController.getAllBlogsByOnlineUser)
 .post([AuthMiddleware], blogController.createBlog);
 
 Router
@@ -19,6 +18,6 @@ Router
 .delete([AuthMiddleware], blogController.deleteBlog);
 
 
-Router.use('/:id/Post', PostController);
+Router.use('/:id/Post', PostRouter);
 
 module.exports = Router;

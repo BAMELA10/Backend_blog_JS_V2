@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const BlogSchema = new Schema({
-    Id: {types: Schema.Types.ObjectId},
+    Id: {type: Schema.Types.ObjectId},
     Name: {
-        types: String,
+        type: String,
     },
     Author : {
-        types: Schema.Types.ObjectId,
-        ref : "User"
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     DateOfUpdate: {
-        types : Date,
+        type: Date,
         default: Date.now()
     },
     DateOfCreation: {
-        types : Date,
+        type: Date,
     },
 },
 {
