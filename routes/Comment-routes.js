@@ -6,22 +6,21 @@ const {
     DeleteComment,
     CreateComment,
     GetSingleComment,
-    FilterComment,
     GetAllComments
 } = require("../controller/CommentController");
 
 
 const {AuthMiddleware} = require("../middleware/Auth");
 
-router.route("/").get([AuthMiddleware, Caching], GetAllComments);
+router
+.route("/")
+.get([AuthMiddleware, Caching], GetAllComments)
+.post(AuthMiddleware, CreateComment);
 
-router.route("/search")
-.get([AuthMiddleware, Caching], FilterComment);
 
-router.route("/:postId")
-.post(AuthMiddleware, CreateComment)
 
-router.route("/:id")
+router
+.route("/:commentId")
 .get([AuthMiddleware, Caching], GetSingleComment)
 .delete(AuthMiddleware, DeleteComment);
 

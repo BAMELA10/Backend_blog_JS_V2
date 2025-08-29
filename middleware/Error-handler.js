@@ -2,7 +2,7 @@ const {StatusCodes} = require("http-status-codes");
 
 const ErrorHandlerMiddleware = (err, req, res, next) => {
     const GenericError = {
-        StatusCode : err.status || StatusCodes.INTERNAL_SERVER_ERROR,
+        StatusCode : err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
         message: err.message || "Something went wrong try again later",
     };
     //console.log(err.code + '  '+ err.error)
