@@ -33,6 +33,6 @@ router
 .put(AuthMiddleware, UpdatePost)
 .delete(AuthMiddleware, DeletePost);
 
-router.use('/:postid/comment', commentRouter)
+router.use('/:postId/comment', commentRouter)
 
 module.exports = router;
