@@ -44,7 +44,7 @@ app.use(ErrorHandlerMiddleware);
 
 const port =  process.env.PORT || 3000 ;
 
-https.createServer(SecurityHttpOption, app).listen(port, async () => {
+https.createServer(SecurityHttpOption, app).listen(port, "0.0.0.0" ,async () => {
     console.log(`Server is running on port ${port} in mode ${process.env.NODE_ENV}`);
     await connectDb()
     .then(() => {
