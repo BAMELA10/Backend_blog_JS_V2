@@ -90,6 +90,22 @@ This project is a backend REST API for a blog application, providing endpoints f
    npm run start:prod
    ```
 
+## Launch with Docker
+
+### Prerequisites
+
+- Docker installed on your system
+- Docker Compose installed
+
+### Steps
+
+1. Ensure Docker and Docker Compose are installed and running.
+2. From the project root directory, run the following command to build and start the application along with MongoDB:
+   ```
+   docker-compose up
+   ```
+   This will start the app on port 3001 and MongoDB on port 27017.
+
 ## Query Parameters for Filtering, Sorting, and Pagination
 
 The API supports query parameters for filtering, sorting, and pagination on various endpoints.
