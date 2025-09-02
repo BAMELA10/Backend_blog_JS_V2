@@ -73,6 +73,9 @@ This project is a backend REST API for a blog application, providing endpoints f
 ## Usage
 
 1. Clone the repository
+    ```
+    git clone https://github.com/BAMELA10/Backend_blog_JS_V2.git
+    ``` 
 2. Install dependencies:
    ```
    npm install

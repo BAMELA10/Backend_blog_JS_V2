@@ -1,0 +1,20 @@
+services:
+  blogbackend:
+    build: .
+    command: "npm run start:dev"
+    environment:
+      MONGO_URI: 'mongodb://mongodb:27017/BlogD'
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/var/lib/mongodb
+
+volumes:
+  mongo-data:
