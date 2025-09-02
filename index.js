@@ -44,7 +44,17 @@ app.use(ErrorHandlerMiddleware);
 
 const port =  process.env.PORT || 3000 ;
 
-https.createServer(SecurityHttpOption, app).listen(port, "0.0.0.0" ,async () => {
+if(process.env.NODE_ENV === 'production') {
+    app.listen(port, "0.0.0.0", async () => {
+    console.log(`Server running on port ${port} in ${process.env.NODE_ENV}`);
+    await connectDb()
+      .then(() => console.log('Connected to database'))
+      .catch(err => console.log('Error connecting to database'));
+})
+}
+else
+{
+    https.createServer(SecurityHttpOption, app).listen(port, async () => {
     console.log(`Server is running on port ${port} in mode ${process.env.NODE_ENV}`);
     await connectDb()
     .then(() => {
@@ -54,3 +64,5 @@ https.createServer(SecurityHttpOption, app).listen(port, "0.0.0.0" ,async () => 
         console.log('Error connecting to database');
     });
 })
+}
+
