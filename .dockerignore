@@ -1,0 +1,7 @@
+*.png;
+*.jpg;
+*.txt;
+*.md;
+node_modules
+Dockerfile
+Task.txt
