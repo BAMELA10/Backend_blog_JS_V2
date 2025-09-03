@@ -7,7 +7,6 @@ This project is a backend REST API for a blog application, providing endpoints f
 - User authentication and authorization with JWT
 - Complete error handling for all request types
 - HTTPS protocol for secure communication
-- API key-based authentication system
 - Rate limiting to prevent abuse
 - Logging for request and error tracking
 - Pagination and caching for performance and scalability
@@ -113,7 +112,7 @@ The API supports query parameters for filtering, sorting, and pagination on vari
 ### Sorting
 - Use `?sort=field` for ascending order
 - Use `?sort=field&desc=field` for descending order
-- Example: `?sort=username&desc=username` for descending by username
+- Example: `?sort=name&desc=name` for descending by name
 
 ### Pagination
 - Use `?page=number&limit=number` to paginate results
@@ -128,7 +127,7 @@ The API supports query parameters for filtering, sorting, and pagination on vari
 ### Usable Fields for Sorting and Filtering
 
 - **Users**:
-  - Sorting: Username, First name, Last name, Email, Role, DateOfJoined
+  - Sorting: name, First name, Last name, Email, Role, DateOfJoined
   - Filtering: email, firstname, lastname, role
 
 - **Posts**:
@@ -143,8 +142,8 @@ The API supports query parameters for filtering, sorting, and pagination on vari
   - No sorting or filtering supported in current implementation
 
 Examples:
-- GetAllUser: `?sort=username&desc=username&page=1&limit=10`
-- FilterUser: `?email=user@example.com&firstname=John&sort=username&page=1&limit=10`
+- GetAllUser: `?sort=name&desc=name&page=1&limit=10`
+- FilterUser: `?email=user@example.com&firstname=John&sort=name&page=1&limit=10`
 - FilterComment: `?userId=123&postId=456&sort=DateOfCreation&desc=DateOfCreation&page=1&limit=10`
 - GetAllComments: `?sort=DateOfCreation&page=1&limit=10`
 - GetAllPost: `?sort=title&desc=title&page=1&limit=10`

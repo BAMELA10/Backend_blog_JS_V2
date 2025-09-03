@@ -12,7 +12,8 @@ const SecurityHttpOption = {
     key: fs.readFileSync(__dirname + "/ssl/meadowlark.pem"),
     cert: fs.readFileSync(__dirname + "/ssl/meadowlark.crt")
 }
-
+app.set('view engine', 'ejs');      // moteur de rendu
+app.set('views', __dirname + '/views');
 const connectDb = require('./db/ConnectDb');
 
 const AuthRouter = require('./routes/Auth-routes');
@@ -30,8 +31,9 @@ app.use(express.json());
 app.use(limiter);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-
-
+app.get('/', (req, res) => {
+    res.render('index')
+})
 app.use('/BlogApi/v2/auth', AuthRouter);
 app.use('/BlogApi/v2/Blog', BlogRouter)
 app.use('/BlogApi/v2/user', UserRouter);
