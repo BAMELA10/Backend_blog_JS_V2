@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogAPI Docs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-expand-sm navbar-expand-md navbar-dark bg-dark">
+        <div class="container justify-content-center">
+            <div class="row">
+                <h5 class="fs-2 text-light text-center" aria-current="page">BlogApi Documentation</h5>
+            </div>          
+        </div>
+    </nav>
+    
+
+    <div class="container">
+        <div class="row mb-2 mt-1">
+            <p class="display-2 text-start">Presentation</p>
+            <p class="d-inline-flex gap-1">
+                <a name="" id="" class="btn btn-dark" href="https://github.com/BAMELA10/Backend_blog_JS_V2" role="button" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                    </svg>
+                </a>
+<!--                 <a name="" id="" class="btn btn-primary" href="zoojohan10@gmail.com" role="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+                    <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
+                    <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
+                    </svg>
+                </a> -->
+                <a name="" id="" class="btn btn-primary" href="https://bamelajordan.infinityfreeapp.com/?i=1" role="button" >
+                    Author
+                </a>
+                
+            </p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="fs-5">
+                    This project is a REST API for a blog, providing endpoints for manage the blog. It include user authentication, blog posts, comments, and file uploads. It is designed with a focus on security, performance, and scalability.
+                </p>
+                <h5>Structure of Objects</h5>
+                <Strong>User</Strong>
+                <ul>
+                    <li>name: {first: string, last: string}</li>
+                    <li>email: string </li>
+                    <li>password: string </li>
+                    <li>Role: string</li>
+                    <li>Date Joined: Date</li>
+                </ul>
+                <Strong>Blog</Strong>
+                <ul>
+                    <li>Name: {first: string, last: string}</li>
+                    <li>Author: Identifier </li>
+                    <li>Date of Update: Date </li>
+                    <li>Date of Creation: Date</li>
+                </ul>
+                <Strong>Post</Strong>
+                <ul>
+                    <li>title: string</li>
+                    <li>content: string </li>
+                    <li>Blog: Identifier </li>
+                    <li>Last Update: Date </li>
+                    <li>Date of Creation: Date</li>
+                </ul>
+                <Strong>Comment</Strong>
+                <ul>
+                    
+                    <li>content: string </li>
+                    <li>Post: Identifier </li>
+                    <li>Author: Identifier </li>
+                    <li>Date of Creation: Date</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-1">
+            <p class="display-2 text-start">Features</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="fs-3">
+                <ul>
+                    <li>User authentication and authorization with JWT</li>
+                    <li>Complete error handling for all request types</li>
+                    <li>HTTPS protocol for secure communication</li>
+                    <li>Rate limiting to prevent abuse</li>
+                    <li>Logging for request and error tracking</li>
+                    <li>Pagination and caching for performance and scalability</li>
+                    <li>Filtering and sorting support on users, posts, and comments</li>
+                </ul>
+            </p>
+            </div>    
+        </div>
+
+        <div class="row mb-2 mt-1">
+            <p class="display-2 text-start">Endpoints Overview</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">Authentication & Registration</p>
+                <p class="fs-5 text-start fst-italic">/BlogApi/v2/auth</p>
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>Fields required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>POST</td>
+                                <td>/register</td>
+                                <td>name.last, email, password</td>
+                                <td>Register a new user</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/login</td>
+                                <td>email, password</td>
+                                <td>Login user</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/logout</td>
+                                <td>/</td>
+                                <td>Logout user</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">User</p>
+                <p class="fs-5 text-start fst-italic">/BlogApi/v2/user</p>
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>Fields required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>/me</td>
+                                <td>/</td>
+                                <td>Get current logged-in user</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>/me</td>
+                                <td>/</td>
+                                <td>Update current user's password</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/search</td>
+                                <td>email or firstname or role or lastname</td>
+                                <td>Filter users</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>Get all users</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/:id</td>
+                                <td>/</td>
+                                <td>Get single user by ID </td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>/:id</td>
+                                <td>email or firstname or lastname</td>
+                                <td>Update user by ID</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">Blog</p>
+                <p class="fs-5 text-start fst-italic">/BlogApi/v2/Blog</p>
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>Fields required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>Get all blogs for online user</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/</td>
+                                <td>name</td>
+                                <td>Create a new blog</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/:id</td>
+                                <td>/</td>
+                                <td>Get blog by ID</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>/:id</td>
+                                <td>name</td>
+                                <td>Update blog by ID</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>/:id</td>
+                                <td>/</td>
+                                <td>Delete blog by ID</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">Posts</p>
+                <p class="fs-5 text-start fst-italic">/BlogApi/v2/Blog/:id/Post</p>
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>Fields required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>Get all posts</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/</td>
+                                <td>title, content</td>
+                                <td>Create new post</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/me</td>
+                                <td>/</td>
+                                <td>Get posts for online author</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/search</td>
+                                <td>title or author</td>
+                                <td>Filter posts</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/:postid</td>
+                                <td>/</td>
+                                <td>Get single post by ID</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>/:postid</td>
+                                <td>title or content</td>
+                                <td>Update post by ID</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>/:postid</td>
+                                <td>/</td>
+                                <td>Delete post by ID</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">Comments</p>
+                <p class="fs-6 text-start fst-italic">/BlogApi/v2/Blog/:id/Post/:postId/comment</p>
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>Fields required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>/</td>
+                                <td>/</td>
+                                <td>Get all comments</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>/</td>
+                                <td>content</td>
+                                <td>Create new comment</td>
+                            </tr>
+                            <tr>
+                                <td>GET</td>
+                                <td>/:commentId</td>
+                                <td>/</td>
+                                <td>Get single comment by ID</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>/:commentId</td>
+                                <td>title or content</td>
+                                <td>Delete comment by ID</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="display-6 text-start">Photo Upload</p>
+                <p class="fs-5 text-start fst-italic">/BlogApi/v2/upload</p>
+            </div>
+        </div>
+            
+            
+            
+            
+        
+        <div class="row mb-2 mt-1">
+            <p class="display-6 text-start  mb-2 mt-1">Filtering, Sorting, and Pagination</p>
+            <p class="fs-5 text-start  mb-2 mt-1">Filtering</p>
+            <p class="text-start mb-2 mt-1">Specific filters depend on the endpoint:</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <ul>
+                    <li><strong>Users:</strong> `?email=value`, `?firstname=value`, `?role=value`, `?lastname=value`</li>
+                    <li><strong>Posts:</strong>`?title=value`, `?author=value`</li>
+                    <li><strong>Comments:</strong>`?userId=value`, `?postId=value`, `?id=value`</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <p class="fs-5 text-start  mb-2 mt-1">Sorting</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <ul>
+                    <li><strong>Use `?sort=field` for ascending order</strong></li>
+                    <li><strong>Use `?sort=field&desc=field` for descending order</strong></li>
+                    <li><strong>Example:</strong>`?sort=name&desc=name` for descending by name</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mb-2 mt-1">
+            <p class="fs-5 text-start  mb-2 mt-1">Pagination</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <ul>
+                    <li><strong>Use `?page=number&limit=number` to paginate results</strong></li>
+                    <li><strong>Example: </strong>`?page=1&limit=10` for page 1 with 10 items per page</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mb-2 mt-1">
+             <p class="display-6 text-start">Usable Fields for Sorting and Filtering</p>
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12">
+                <p class="fs-5 text-start  mb-2 mt-1">User</p>
+                <ul>
+                    <li><strong>Sorting:</strong> name, First name, Last name, Email, Role, DateOfJoined</li>
+                    <li><strong>Filtering:</strong> email, firstname, lastname, role</li>
+                </ul>
+                <p class="fs-5 text-start  mb-2 mt-1">Posts</p>
+                <ul>
+                    <li><strong>Sorting:</strong> title, DateOfCreation, LastUpdate</li>
+                    <li><strong>Filtering:</strong> title, author </li>
+                </ul>
+                <p class="fs-5 text-start  mb-2 mt-1">Comment</p>
+                <ul>
+                    <li><strong>Sorting:</strong> DateOfCreation</li>
+                    <li><strong>Filtering:</strong> userId, postId, id</li>
+                </ul>
+            </div>  
+        </div>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container justify-content-center">
+            <div class="row mt-3 mb-4">
+                <p>&copy; 2025 - BlogAPI - BAMELA JORDAN</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
