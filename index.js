@@ -32,7 +32,7 @@ app.use(limiter);
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('Index')
 })
 app.use('/BlogApi/v2/auth', AuthRouter);
 app.use('/BlogApi/v2/Blog', BlogRouter)
